@@ -11,7 +11,6 @@ function readWords() {
 
 const words = readWords();
 
-
 async function guess(page: Page, word: string) {
     const letters = word.split('')
     for (const letter of letters) {
@@ -29,7 +28,8 @@ test('basic test', async ({page}) => {
     let toast = page.locator("#game-toaster");
 
     while (!await toast.isVisible()) {
-        await guess(page, 'story');
+      let word = words.pop();
+      await guess(page, word);
     }
 
     await page.pause()
