@@ -1,6 +1,7 @@
 import {Page, test} from '@playwright/test';
 import * as fs from 'fs';
 import {Dictionary} from './dictionary';
+import {Solution} from './solution';
 
 function readWords() {
     const words: string[] = [];
@@ -28,11 +29,24 @@ test('basic test', async ({page}) => {
     await page.goto('https://www.powerlanguage.co.uk/wordle/');
     await page.click('game-modal path');
 
-    let toast = page.locator("#game-toaster");
+    const toast = page.locator("#game-toaster");
+    let solution = new Solution();
 
     while (!await toast.isVisible()) {
-        let word = dictionary.nextGuess();
+        const word = dictionary.nextGuess(solution);
+        console.log("guessing " + word);
         await guess(page, word);
+
+        const gameTile = await page.locator('game-tile >> nth=0');
+        const result = await gameTile.getAttribute('evaluation');
+        if (result === 'absent') {
+            let letter = await gameTile.getAttribute('letter');
+            solution.not(letter);
+        } else if (result === 'present') {
+
+        } else {
+
+        }
     }
 
     await page.pause()

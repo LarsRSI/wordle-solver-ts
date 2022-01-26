@@ -1,3 +1,5 @@
+import {Solution} from './solution';
+
 export class Dictionary {
     words: string[];
 
@@ -5,8 +7,15 @@ export class Dictionary {
         this.words = words;
     }
 
-    nextGuess(): string {
-        return this.words.pop();
+    nextGuess(solution: Solution): string {
+        if (solution.wrongOnes.length == 0) {
+            return this.words.pop();
+        }
+
+        const onlyContainsLettersThatAreNotRuledOutYet = word => !solution.wrongOnes.some(element => word.includes(element));
+
+        const potentialWords = this.words.filter(onlyContainsLettersThatAreNotRuledOutYet);
+        return potentialWords.pop();
     }
 }
 
