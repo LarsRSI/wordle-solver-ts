@@ -26,7 +26,11 @@ test('basic test', async ({page}) => {
     await page.goto('https://www.powerlanguage.co.uk/wordle/');
     await page.click('game-modal path');
 
-    await guess(page, 'story');
+    let toast = page.locator("#game-toaster");
+
+    while (!await toast.isVisible()) {
+        await guess(page, 'story');
+    }
 
     await page.pause()
 });
