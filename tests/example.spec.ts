@@ -14,5 +14,6 @@ const words = readWords();
 
 test('basic test', async ({page}) => {
     await page.goto('https://www.powerlanguage.co.uk/wordle/');
+    await page.click('game-modal path');
     await page.pause()
 });
