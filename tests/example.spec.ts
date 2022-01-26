@@ -1,5 +1,6 @@
 import {Page, test} from '@playwright/test';
 import * as fs from 'fs';
+import {Dictionary} from './dictionary';
 
 function readWords() {
     const words: string[] = [];
@@ -10,6 +11,8 @@ function readWords() {
 }
 
 const words = readWords();
+
+let dictionary = new Dictionary(words);
 
 async function guess(page: Page, word: string) {
     const letters = word.split('')
@@ -28,8 +31,8 @@ test('basic test', async ({page}) => {
     let toast = page.locator("#game-toaster");
 
     while (!await toast.isVisible()) {
-      let word = words.pop();
-      await guess(page, word);
+        let word = dictionary.nextGuess();
+        await guess(page, word);
     }
 
     await page.pause()
