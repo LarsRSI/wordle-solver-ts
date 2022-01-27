@@ -30,7 +30,7 @@ async function gameOver(page: Page) {
     return await toast.isVisible();
 }
 
-test('basic test', async ({page}) => {
+test('solve wordle of the day', async ({page}) => {
     await page.goto('https://www.powerlanguage.co.uk/wordle/');
     await page.click('game-modal path');
 
