@@ -53,11 +53,9 @@ test('solve wordle of the day', async ({page}) => {
         const word = dictionary.nextGuess(solution);
         await guess(page, word);
 
-        await evaluate(page, 1, solution);
-        await evaluate(page, 2, solution);
-        await evaluate(page, 3, solution);
-        await evaluate(page, 4, solution);
-        await evaluate(page, 5, solution);
+        for (const i of [1, 2, 3, 4, 5]) {
+            await evaluate(page, i, solution);
+        }
     }
 
     await page.pause()
