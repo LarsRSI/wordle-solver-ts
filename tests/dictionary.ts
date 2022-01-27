@@ -8,16 +8,20 @@ export class Dictionary {
     }
 
     nextGuess(solution: Solution): string {
-        if (solution.wrongOnes.length == 0) {
-            return this.words.pop();
-        }
 
         const onlyContainsLettersThatAreNotRuledOutYet = word => !solution.wrongOnes.some(element => word.includes(element));
 
-        const potentialWords = this.words.filter(onlyContainsLettersThatAreNotRuledOutYet);
-        let s = potentialWords.pop();
+        const potentialWords = this.words.filter(onlyContainsLettersThatAreNotRuledOutYet).filter(word => {
+            for (let letter of solution.rightOnes) {
+                if (!(word.charAt(letter[0] - 1) == letter[1])) {
+                    return false;
+                }
+            }
+            return true
+        });
+        let result = potentialWords.pop();
         this.words = potentialWords
-        return s;
+        return result;
     }
 }
 

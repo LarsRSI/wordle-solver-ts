@@ -28,3 +28,24 @@ test('next word from dictionary when multiple letters not possible', async ({ pa
     let result = dictionary.nextGuess(solution);
     expect(result).toBe('cde')
 });
+
+test('will not rule out words with f if f was among correct ones but then wrong for other position', async ({ page }) => {
+    let dictionary = new Dictionary(["abc", "bcd", "efg", "cde", "def"]);
+    let solution = new Solution();
+    solution.not('a');
+    solution.not('b');
+    solution.has(2, 'f')
+    solution.not('f');
+
+    let result = dictionary.nextGuess(solution);
+    expect(result).toBe('efg')
+});
+
+test('will only return words that have correct letter at same location', async ({ page }) => {
+    let dictionary = new Dictionary(["abc", "bcd", "cde", "def", "efg", "dot"]);
+    let solution = new Solution();
+    solution.has(2, 'd')
+
+    let result = dictionary.nextGuess(solution);
+    expect(result).toBe('cde')
+});
