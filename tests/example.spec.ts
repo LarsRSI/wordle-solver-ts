@@ -39,7 +39,8 @@ test('solve wordle of the day', async ({page}) => {
         const word = dictionary.nextGuess(solution);
         await guess(page, word);
 
-        const gameTile = await page.locator('game-tile >> nth=0');
+        let index = '0';
+        const gameTile = await page.locator('game-tile >> nth=' + index);
         const result = await gameTile.getAttribute('evaluation');
         if (result === 'absent') {
             let letter = await gameTile.getAttribute('letter');
