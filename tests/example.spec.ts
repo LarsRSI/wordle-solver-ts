@@ -53,6 +53,10 @@ test('solve wordle of the day', async ({page}) => {
         await guess(page, word);
 
         await evaluate(page, '0', solution);
+        await evaluate(page, '1', solution);
+        await evaluate(page, '2', solution);
+        await evaluate(page, '3', solution);
+        await evaluate(page, '4', solution);
     }
 
     await page.pause()
