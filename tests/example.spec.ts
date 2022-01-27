@@ -30,7 +30,7 @@ async function gameOver(page: Page) {
     return await toast.isVisible();
 }
 
-async function evaluate(page: Page, index: number, solution: Solution) {
+async function evaluate(page: Page, row: number, index: number, solution: Solution) {
     const gameTileIndex = index - 1;
     const gameTile = await page.locator('game-tile >> nth=' + gameTileIndex);
     const result = await gameTile.getAttribute('evaluation');
@@ -53,8 +53,10 @@ test('solve wordle of the day', async ({page}) => {
         const word = dictionary.nextGuess(solution);
         await guess(page, word);
 
-        for (const i of [1, 2, 3, 4, 5]) {
-            await evaluate(page, i, solution);
+        for (const row of [1, 2, 3, 4, 5, 6]) {
+            for (const i of [1, 2, 3, 4, 5]) {
+                await evaluate(page, row, i, solution);
+            }
         }
     }
 
