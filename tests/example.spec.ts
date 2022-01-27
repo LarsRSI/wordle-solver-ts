@@ -1,4 +1,4 @@
-import {Page, test} from '@playwright/test';
+import {expect, Page, test} from '@playwright/test';
 import * as fs from 'fs';
 import {Dictionary} from './dictionary';
 import {Solution} from './solution';
@@ -89,6 +89,11 @@ test('solve wordle of the day', async ({page}) => {
         }
         row++;
     }
+    await new Promise(f => setTimeout(f, 3000));
+    let locator = page.locator('.statistic-container >> nth=2');
 
-    await page.pause()
+    let currentStreak = (await locator.innerText()).split('\n')[0];
+    const result = Number(currentStreak)
+
+    expect(result).toBe(1);
 });
