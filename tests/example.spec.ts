@@ -25,14 +25,17 @@ async function guess(page: Page, word: string) {
     await new Promise(f => setTimeout(f, 1800));
 }
 
+async function gameOver(page: Page) {
+    const toast = page.locator("#game-toaster");
+    return await toast.isVisible();
+}
+
 test('basic test', async ({page}) => {
     await page.goto('https://www.powerlanguage.co.uk/wordle/');
     await page.click('game-modal path');
 
-    const toast = page.locator("#game-toaster");
     let solution = new Solution();
-
-    while (!await toast.isVisible()) {
+    while (!await gameOver(page)) {
         const word = dictionary.nextGuess(solution);
         console.log("guessing " + word);
         await guess(page, word);
