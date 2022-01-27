@@ -30,9 +30,35 @@ async function gameOver(page: Page) {
     return await toast.isVisible();
 }
 
+function adjustRow(row: number) {
+    let rowAdjustment = 0;
+    switch (row) {
+        case 1:
+            rowAdjustment = 0;
+            break;
+        case 2:
+            rowAdjustment = 5;
+            break;
+        case 3:
+            rowAdjustment = 10;
+            break;
+        case 4:
+            rowAdjustment = 15;
+            break;
+        case 5:
+            rowAdjustment = 20;
+            break;
+        case 6:
+            rowAdjustment = 25;
+            break;
+    }
+    return rowAdjustment;
+}
+
 async function evaluate(page: Page, row: number, index: number, solution: Solution) {
     const gameTileIndex = index - 1;
-    const gameTile = await page.locator('game-tile >> nth=' + gameTileIndex);
+    const rowAdjustment = adjustRow(row);
+    const gameTile = await page.locator('game-tile >> nth=' + (gameTileIndex + rowAdjustment));
     const result = await gameTile.getAttribute('evaluation');
     if (result === 'absent') {
         let letter = await gameTile.getAttribute('letter');
