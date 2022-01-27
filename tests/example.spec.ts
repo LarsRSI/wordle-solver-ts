@@ -30,8 +30,9 @@ async function gameOver(page: Page) {
     return await toast.isVisible();
 }
 
-async function evaluate(page: Page, index: string, solution: Solution) {
-    const gameTile = await page.locator('game-tile >> nth=' + index);
+async function evaluate(page: Page, index: number, solution: Solution) {
+    const gameTileIndex = index - 1;
+    const gameTile = await page.locator('game-tile >> nth=' + gameTileIndex);
     const result = await gameTile.getAttribute('evaluation');
     if (result === 'absent') {
         let letter = await gameTile.getAttribute('letter');
@@ -52,11 +53,11 @@ test('solve wordle of the day', async ({page}) => {
         const word = dictionary.nextGuess(solution);
         await guess(page, word);
 
-        await evaluate(page, '0', solution);
-        await evaluate(page, '1', solution);
-        await evaluate(page, '2', solution);
-        await evaluate(page, '3', solution);
-        await evaluate(page, '4', solution);
+        await evaluate(page, 1, solution);
+        await evaluate(page, 2, solution);
+        await evaluate(page, 3, solution);
+        await evaluate(page, 4, solution);
+        await evaluate(page, 5, solution);
     }
 
     await page.pause()
