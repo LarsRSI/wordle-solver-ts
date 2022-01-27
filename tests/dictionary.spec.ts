@@ -49,3 +49,12 @@ test('will only return words that have correct letter at same location', async (
     let result = dictionary.nextGuess(solution);
     expect(result).toBe('cde')
 });
+
+test('will only return words that have present letter', async ({ page }) => {
+    let dictionary = new Dictionary(["abc", "bcd", "cde", "def", "efg", "dot"]);
+    let solution = new Solution();
+    solution.almost(2, 'b')
+
+    let result = dictionary.nextGuess(solution);
+    expect(result).toBe('bcd')
+});

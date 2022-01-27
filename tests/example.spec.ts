@@ -66,6 +66,7 @@ async function evaluate(page: Page, row: number, index: number, solution: Soluti
             solution.not(letter);
             break;
         case 'present':
+            solution.almost(index, letter);
             break;
         case 'correct':
             solution.has(index, letter)

@@ -1,6 +1,7 @@
 export class Solution {
     private _wrongOnes: Set<string> = new Set<string>();
     private _rightOnes: Array<[number, string]> = [];
+    private _presentOnes: Array<[number, string]> = [];
 
     constructor() {
     }
@@ -13,6 +14,14 @@ export class Solution {
         this._wrongOnes.add(value)
     }
 
+    has(index: number, letter: string) {
+        this._rightOnes.push([index, letter])
+    }
+
+    almost(index: number, letter: string) {
+        this._presentOnes.push([index, letter])
+    }
+
     get wrongOnes(): string[] {
         return Array.from(this._wrongOnes);
     }
@@ -21,8 +30,8 @@ export class Solution {
         return this._rightOnes;
     }
 
-    has(index: number, letter: string) {
-        this._rightOnes.push([index, letter])
+    get presentOnes(): Array<[number, string]> {
+        return this._presentOnes;
     }
 }
 

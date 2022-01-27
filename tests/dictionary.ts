@@ -13,7 +13,14 @@ export class Dictionary {
 
         const potentialWords = this.words.filter(onlyContainsLettersThatAreNotRuledOutYet).filter(word => {
             for (let letter of solution.rightOnes) {
-                if (!(word.charAt(letter[0] - 1) == letter[1])) {
+                if (word.charAt(letter[0] - 1) != letter[1]) {
+                    return false;
+                }
+            }
+            return true
+        }).filter(word => {
+            for (let letter of solution.presentOnes) {
+                if (!word.includes(letter[1])) {
                     return false;
                 }
             }
