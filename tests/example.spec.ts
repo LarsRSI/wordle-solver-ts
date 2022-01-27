@@ -60,13 +60,16 @@ async function evaluate(page: Page, row: number, index: number, solution: Soluti
     const rowAdjustment = adjustRow(row);
     const gameTile = await page.locator('game-tile >> nth=' + (gameTileIndex + rowAdjustment));
     const result = await gameTile.getAttribute('evaluation');
-    if (result === 'absent') {
-        let letter = await gameTile.getAttribute('letter');
-        solution.not(letter);
-    } else if (result === 'present') {
-
-    } else {
-
+    let letter = await gameTile.getAttribute('letter');
+    switch (result) {
+        case 'absent':
+            solution.not(letter);
+            break;
+        case 'present':
+            break;
+        case 'correct':
+            solution.has(index, letter)
+            break;
     }
 }
 
@@ -75,15 +78,15 @@ test('solve wordle of the day', async ({page}) => {
     await page.click('game-modal path');
 
     let solution = new Solution();
+    let row = 1;
     while (!await gameOver(page)) {
         const word = dictionary.nextGuess(solution);
-        await guess(page, word);
 
-        for (const row of [1, 2, 3, 4, 5, 6]) {
-            for (const i of [1, 2, 3, 4, 5]) {
-                await evaluate(page, row, i, solution);
-            }
+        await guess(page, word);
+        for (const i of [1, 2, 3, 4, 5]) {
+            await evaluate(page, row, i, solution);
         }
+        row++;
     }
 
     await page.pause()
