@@ -37,7 +37,6 @@ test('solve wordle of the day', async ({page}) => {
     let solution = new Solution();
     while (!await gameOver(page)) {
         const word = dictionary.nextGuess(solution);
-        console.log("guessing " + word);
         await guess(page, word);
 
         const gameTile = await page.locator('game-tile >> nth=0');
