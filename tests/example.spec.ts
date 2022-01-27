@@ -30,6 +30,19 @@ async function gameOver(page: Page) {
     return await toast.isVisible();
 }
 
+async function evaluate(page: Page, index: string, solution: Solution) {
+    const gameTile = await page.locator('game-tile >> nth=' + index);
+    const result = await gameTile.getAttribute('evaluation');
+    if (result === 'absent') {
+        let letter = await gameTile.getAttribute('letter');
+        solution.not(letter);
+    } else if (result === 'present') {
+
+    } else {
+
+    }
+}
+
 test('solve wordle of the day', async ({page}) => {
     await page.goto('https://www.powerlanguage.co.uk/wordle/');
     await page.click('game-modal path');
@@ -40,16 +53,7 @@ test('solve wordle of the day', async ({page}) => {
         await guess(page, word);
 
         let index = '0';
-        const gameTile = await page.locator('game-tile >> nth=' + index);
-        const result = await gameTile.getAttribute('evaluation');
-        if (result === 'absent') {
-            let letter = await gameTile.getAttribute('letter');
-            solution.not(letter);
-        } else if (result === 'present') {
-
-        } else {
-
-        }
+        await evaluate(page, index, solution);
     }
 
     await page.pause()
