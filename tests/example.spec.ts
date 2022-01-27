@@ -74,6 +74,12 @@ async function evaluate(page: Page, row: number, index: number, solution: Soluti
     }
 }
 
+async function findCurrentWinStreak(page: Page) {
+    let locator = page.locator('.statistic-container >> nth=2');
+    let currentStreak = (await locator.innerText()).split('\n')[0];
+    return Number(currentStreak);
+}
+
 test('solve wordle of the day', async ({page}) => {
     await page.goto('https://www.powerlanguage.co.uk/wordle/');
     await page.click('game-modal path');
@@ -90,10 +96,7 @@ test('solve wordle of the day', async ({page}) => {
         row++;
     }
     await new Promise(f => setTimeout(f, 3000));
-    let locator = page.locator('.statistic-container >> nth=2');
-
-    let currentStreak = (await locator.innerText()).split('\n')[0];
-    const result = Number(currentStreak)
+    const result = await findCurrentWinStreak(page);
 
     expect(result).toBe(1);
 });
