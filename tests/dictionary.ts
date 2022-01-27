@@ -15,7 +15,9 @@ export class Dictionary {
         const onlyContainsLettersThatAreNotRuledOutYet = word => !solution.wrongOnes.some(element => word.includes(element));
 
         const potentialWords = this.words.filter(onlyContainsLettersThatAreNotRuledOutYet);
-        return potentialWords.pop();
+        let s = potentialWords.pop();
+        this.words = potentialWords
+        return s;
     }
 }
 
