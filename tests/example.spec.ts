@@ -52,8 +52,7 @@ test('solve wordle of the day', async ({page}) => {
         const word = dictionary.nextGuess(solution);
         await guess(page, word);
 
-        let index = '0';
-        await evaluate(page, index, solution);
+        await evaluate(page, '0', solution);
     }
 
     await page.pause()
