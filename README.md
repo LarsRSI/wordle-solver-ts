@@ -14,6 +14,8 @@ You'll need TypeScript, visit [typescriptlang.org](https://www.typescriptlang.or
 
 run `npm install` from the command line to install playwright.
 
+and then run `npx playwright install` so that playwright can prepare the browser binaries.
+
 Now you can run several commands:
 
 `npx playwright test`
