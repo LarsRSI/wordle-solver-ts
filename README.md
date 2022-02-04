@@ -184,5 +184,21 @@ const word = dictionary.nextGuess();
 
 </details>
 
+### get letter result
+
+<details>
+  <summary>Click to expand!</summary>
+
+```jsx
+const gameTile = await page.locator('game-tile >> nth=0');
+const result = await gameTile.getAttribute('evaluation');
+if (result === 'absent') {
+    let letter = await gameTile.getAttribute('letter');
+    // do something with letter
+}
+```
+
+</details>
+
 
 # Good luck and have fun!
