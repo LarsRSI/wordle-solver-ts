@@ -16,11 +16,7 @@ const words = readWords();
 let dictionary = new Dictionary(words);
 
 async function guess(page: Page, word: string) {
-    const letters = word.split('')
-    for (const letter of letters) {
-        const buttonSelector = `button[data-key=${letter}]`;
-        await page.click(buttonSelector);
-    }
+    page.keyboard.type(word);
     await page.click('text=enter');
     await new Promise(f => setTimeout(f, 1800));
 }
